@@ -14,15 +14,16 @@ from converter import Converter
 
 name = ('Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'Cu', 'O', 'H', 'H')
 
+
 for hops in range(10):
-    fname  = 'hop%d_qn.traj'%(hops)
-    # fname1 = 'hop%d_qn.log'%(hops)
+    fname = 'hop%d_md.traj'%(hops)
     traj  = Trajectory(fname)
     length_trajectory = len(traj) # No. of atom objects
+    n_atoms = len(traj[-1].get_positions()) # No. of atoms in each configuration
 
     n = 1
     for atoms in traj:
-        output_file = "%d_%d_qn.xyz" % (hops,n)
+        output_file = "%d_%d.xyz" % (hops,n)
         a = np.array(atoms.get_positions())
         with open(output_file, 'w') as f:
             f.write(str(len(a)))
@@ -33,5 +34,8 @@ for hops in range(10):
                     # print(str(a[i,x]))
                     f.write('\t%f'% (a[i,x]))
                 f.write('\n')
+        outfile = '%d_%d.zmat' % (hops,n)
+        b= Converter()
+        b.run_cartesian( input_file = output_file, output_file = outfile )
         n = n + 1
     print(hops)
