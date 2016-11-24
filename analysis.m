@@ -3,56 +3,20 @@ format long
 %The Data
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 md_map   = importdata('distance_map.dat');
-md_prop  = importdata('properties.dat')*-1;
+md_prop  = importdata('properties.dat');
 md_col   = (md_prop - min(md_prop))/(max(md_prop) - min(md_prop));
 
 qn_map   = importdata('distance_map_qn.dat');
-qn_prop  = importdata('properties_qn.dat')*-1;
+qn_prop  = importdata('properties_qn.dat');
 qn_col   = (qn_prop - min(qn_prop))/(max(qn_prop) - min(qn_prop));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 map        = [md_map; qn_map];
-prop       = [md_prop; qn_prop]/30;
-min_prop   = min(prop)-1;
-max_prop   = max(prop)-1;
+prop       = [md_prop; qn_prop]/(-30);
+min_prop   = min(prop);
+max_prop   = max(prop);
 col        = (prop - min_prop)/(max_prop - min_prop);
-%mean(map(:,1:3))
-%std(map(:,1:3))
 clear min_prop max_prop
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Import XYZ data of all 292 md traj points
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-md_xyz = importdata('xyz_info.dat');
-h2o  = (md_xyz(:,82:90));
-
-
-%max(h2o(:,1:3)) - min(h2o(:,1:3))
-%2.698
-%3.020
-%3.1890
-
-%base = md_xyz(1,1:81).';
-cu = reshape(md_xyz(1,1:81).',[3,27]).';
-structure = [h2o(:,1:3);cu];
-property  = [md_col; ones(27,1)*0.99];
-
-figure
-scatter3(structure(:,1), structure(:,2), structure(:,3), (property+1)*100, property, 'fill')
-xlabel('x axis')
-ylabel('y axis')
-zlabel('z axis')
-colormap(jet)
-colorbar
-
-ls = zeros(1,27);
-dist_list = zeros(27,27);
-for i = 1:27
- for j = 1:27
-     ls(j) = norm((cu(i,:)-cu(j,:)));
- end
- dist_list(i,:) = sort(ls);
-end
-clear ls
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Partition Data into Test & Training Set
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
