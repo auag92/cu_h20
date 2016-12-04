@@ -27,7 +27,7 @@ scatter3(structure(:,1), structure(:,2), structure(:,3), (property+1)*100, prope
 xlabel('x axis')
 ylabel('y axis')
 zlabel('z axis')
-title(['min_prop = ' num2str(min_prop) ', max_prop = ' num2str(max_prop)])
+title(['min prop = ' num2str(min_prop) ', max prop = ' num2str(max_prop)])
 colormap(jet)
 colorbar
 
