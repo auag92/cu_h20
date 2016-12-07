@@ -7,3 +7,12 @@ m1 = mean(prop1);
 s1 = std(prop1);
 m2 = mean(prop2);
 s2 = std(prop2);
+
+figure
+hist = histogram(prop, 50)
+
+figure
+hist1 = histogram(prop1, 20)
+
+figure
+hist

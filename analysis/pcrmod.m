@@ -1,4 +1,4 @@
-function sse = pcrmod(Xtrain,ytrain,Xtest,ytest)
+function sse = pcrmod(Xtrain,ytrain,Xtest,ytest,maxNumComp = 50)
 %PCRSSE SSE for Principal Components Regression cross-validation.
 % This function is used in the demo PLSPCRDEMO.
 %
@@ -10,7 +10,7 @@ function sse = pcrmod(Xtrain,ytrain,Xtest,ytest)
 %   Copyright 2008 The MathWorks, Inc.
 
 
-maxNumComp = 50;
+
 sse = zeros(1,maxNumComp+1);
 
 % The 0'th model is just the mean of the training response data.
@@ -18,7 +18,7 @@ yfit0 = mean(ytrain);
 sse(1) = sum((ytest - yfit0).^2);
 
 % Compute PCA loadings from the training predictor data, and regress the first
-% 10 principal components on the centered traiing response data.
+% 10 principal components on the centered training response data.
 [Loadings,Scores] = pca(Xtrain,'Economy',false);
 beta = regress(ytrain-yfit0, Scores(:,1:maxNumComp));
 
