@@ -27,17 +27,17 @@ function [beta, Rsq, MAE] = pls_fit(X, y, CV, n_comp)
     disp(std(AE))
     disp(msep)
 %     
-%     figure
-%     plot(1:n_comp,cumsum(100*PctVar(2,:)),'-bo');
-%     xlabel('Number of PLS components');
-%     ylabel('Percent Variance Explained in Y');
-%     legend('Partial Least Squares', 'location', 'SE')
-% 
-%     figure
-%     plot(0:n_comp,msep(2,:),'b-o');
-%     xlabel('Number of components');
-%     ylabel('Estimated Mean Squared Prediction Error');
-%     legend('PLSR','location','NE');
+    figure
+    plot(1:n_comp,cumsum(100*PctVar(2,:)),'-bo');
+    xlabel('Number of PLS components');
+    ylabel('Percent Variance Explained in Y');
+    legend('Partial Least Squares', 'location', 'SE')
+
+    figure
+    plot(0:n_comp,msep(2,:),'b-o');
+    xlabel('Number of components');
+    ylabel('Estimated Mean Squared Prediction Error');
+    legend('PLSR','location','NE');
 
     figure
     plot(y_test, y_fit, 'bo')

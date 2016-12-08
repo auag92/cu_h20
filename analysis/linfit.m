@@ -12,6 +12,7 @@ function [r, Rsq, MAE] = linfit(X, y, k)
     y_test    = y(test,:);
     
     r         =     regress(y_train, [ones(size(X_train, 1), 1) X_train]);
+%     r         =     mvregress([ones(size(X_train, 1), 1) X_train], y_train);
     y_fit     =     [ones(size(X_test,1),1) X_test]*r;
     Rsq       =     1 - sum((y_test - y_fit).^2)/sum((y_test - mean(y_test)).^2);
     Msq       =     sqrt(sum((y_test - y_fit).^2)/size(y_test, 1));

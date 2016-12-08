@@ -15,7 +15,7 @@ function [beta, Rsq, MAE] = pcr_fit(X, y, CV, n_comp)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     [Loadings, Scores, Var] = pca(X_train,'Economy',false);
-    beta = regress(y-mean(y), PCAScores(:,1:n_comp));
+    beta = regress(y_train-mean(y_train), Scores(:,1:n_comp));
 
     beta = Loadings(:,1:n_comp)*beta;
     beta = [mean(y_train) - mean(X_train)*beta; beta];
@@ -33,14 +33,14 @@ function [beta, Rsq, MAE] = pcr_fit(X, y, CV, n_comp)
     disp(Msq)
     disp(MAE)
     disp(std(AE))
-    disp(msep)
+%     disp(msep)
     
     %Plot test data for PCR
     figure
     plot(y_test, y_fit, 'bo')
     xlabel('observed response')
     ylabel('predicted response')
-    legend(sprintf('Principal Component Regression,\n  R Square => %d\n Mean Absolute Error => %d', Rsq, MAE), 'location', 'NW')
+    legend(sprintf('Principal Component Regression,\n  R Square => %d\n Mean Absolute Error => %d eV', Rsq, MAE), 'location', 'NW')
     refline(1, 0)
     ls = lsline()
     ls.Color = 'r'
